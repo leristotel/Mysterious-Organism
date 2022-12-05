@@ -52,25 +52,14 @@ const pAequorFactory = (number, array) => {
     }
   }
 }
+
 function getSurviveInstances() {
-  const surviveInstances=[];
-  while(surviveInstances.length < 30 ){
-    const testInstance=pAequorFactory(1,  mockUpStrand());
-    if(testInstance.willLikelySurvive()){
-      surviveInstances.push(testInstance)
-    }
-  }
-  return surviveInstances;
+ const surviveInstances=[];
+ while(surviveInstances.length < 30 ){
+   const testInstance=pAequorFactory(1,  mockUpStrand());
+   if(testInstance.willLikelySurvive()){
+     surviveInstances.push(testInstance)
+   }
  }
-
-
-
-  
-
-
-
-
-
-
-
-
+ return surviveInstances;
+}
