@@ -64,13 +64,7 @@ function getSurviveInstances() {
  }
 
 
-const target = pAequorFactory(1,  mockUpStrand());
 
-const second=pAequorFactory(2,  mockUpStrand());
-console.log(target.dna);
-console.log(target.dna);
-
-console.log(target.willLikelySurvive());
   
 
 
