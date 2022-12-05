@@ -1,25 +1,77 @@
 // Returns a random DNA base
-const returnRandBase = () => {
-  const dnaBases = ['A', 'T', 'C', 'G'];
-  return dnaBases[Math.floor(Math.random() * 4)];
-};
+const returnRandBase = (banElement) => {
+  const dnaBases = ['A', 'T', 'C', 'G'].filter(elem => {
+    if(elem!=banElement){
+      return elem;
+    }
+  })
+    
+  return dnaBases[Math.floor(Math.random() * dnaBases.length)] 
+}
 
-// Returns a random single stand of DNA containing 15 bases
+// Returns a random single strand of DNA containing 15 bases
 const mockUpStrand = () => {
-  const newStrand = [];
+  const newStrand = []
   for (let i = 0; i < 15; i++) {
-    newStrand.push(returnRandBase());
+    newStrand.push(returnRandBase())
   }
-  return newStrand;
-};
+  return newStrand
+}
 const pAequorFactory = (number, array) => {
   return {
     specimenNum: number,
-    dna: array
+    dna: array, 
+    mutate() {
+      this.dna=this.dna.map(item => {
+        item=returnRandBase(item);
+        return item;
+      })
+    
+    },
+    compareDNA(pAequorObject){
+      let amountOfSimilarElement=0;
+      this.dna.forEach((item, i) => {
+        if (this.dna[i] === pAequorObject.dna[i])       {amountOfSimilarElement++}
+      })
+      console.log(`${this.specimenNum} and ${pAequorObject.specimenNum} have ${amountOfSimilarElement/this.dna.length*100} DNA in common`);
+      
+    }, 
+    willLikelySurvive(){
+      let amountOfCandG=0;
+      let amountOfG=0;
+      this.dna.forEach(base => {
+        if (base==='C' || base==='G' ){
+          amountOfCandG++;
+        }
+      }) 
+      if ( amountOfCandG*100/this.dna.length >= 60 ){
+        return true;
+      } 
+      return false;
+      
+    }
   }
 }
-console.log(pAequorFactory(1,  mockUpStrand()));
+function getSurviveInstances() {
+  const surviveInstances=[];
+  while(surviveInstances.length < 30 ){
+    const testInstance=pAequorFactory(1,  mockUpStrand());
+    if(testInstance.willLikelySurvive()){
+      surviveInstances.push(testInstance)
+    }
+  }
+  return surviveInstances;
+ }
 
+
+const target = pAequorFactory(1,  mockUpStrand());
+
+const second=pAequorFactory(2,  mockUpStrand());
+console.log(target.dna);
+console.log(target.dna);
+
+console.log(target.willLikelySurvive());
+  
 
 
 
